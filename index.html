@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hey Pranssi ✨</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.box{
+  max-width:600px;
+  padding:40px;
+  animation:fadeIn 1.5s ease;
+}
+
+h1{
+  font-size:46px;
+  margin-bottom:20px;
+}
+
+h1 span{
+  color:#ffd86b;
+}
+
+p{
+  font-size:20px;
+  line-height:1.7;
+  color:#ddd;
+  margin-bottom:40px;
+}
+
+button{
+  padding:15px 42px;
+  font-size:17px;
+  border-radius:40px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(45deg,#ff6ec7,#ffd86b);
+  color:#000;
+  box-shadow:0 0 25px rgba(255,110,199,0.6);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px rgba(255,216,107,0.9);
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(25px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h1>Hey <span>Pranssi</span> 🤍</h1>
+
+  <p>
+    I wanted you to see this first.<br><br>
+    Take a small pause,<br>
+    and step into something made just for you ✨
+  </p>
+
+  <button onclick="location.href='countdown.html'">
+    Start →
+  </button>
+</div>
+
+</body>
+</html>

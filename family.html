@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Family ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.container{
+  text-align:center;
+  max-width:90%;
+}
+
+img{
+  max-width:90vw;
+  max-height:70vh;
+  border-radius:22px;
+  box-shadow:0 0 40px rgba(255,255,255,0.25);
+  object-fit:contain;
+  margin-bottom:25px;
+}
+
+.message{
+  font-size:22px;
+  color:#ffd86b;
+  margin-bottom:30px;
+  line-height:1.7;
+}
+
+.buttons{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+}
+
+button{
+  padding:14px 40px;
+  font-size:16px;
+  border-radius:30px;
+  border:1px solid white;
+  background:transparent;
+  color:white;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:0.4;
+  cursor:not-allowed;
+}
+</style>
+</head>
+<!-- 🎶 FAMILY MUSIC -->
+<audio id="familyMusic" autoplay loop>
+  <source src="/music/family.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const familyMusic = document.getElementById("familyMusic");
+  familyMusic.volume = 0.4;
+
+  // autoplay block ho to first click pe start
+  document.body.addEventListener("click", () => {
+    familyMusic.play();
+  }, { once: true });
+</script>
+
+
+<body>
+
+<div class="container">
+  <img id="photo" src="/images/p9.jpg">
+  <div class="message" id="text"></div>
+
+  <div class="buttons">
+    <button id="prevBtn" onclick="prevPhoto()">← Prev</button>
+    <button id="nextBtn" onclick="nextPhoto()">Next →</button>
+  </div>
+</div>
+
+<script>
+const photos = [
+  {
+    img: "/images/p9.jpg",
+    text: "Family — jahan se har kahani shuru hoti hai, aur har muskaan ko wajah milti hai 🤍"
+  },
+  {
+    img: "/images/p10.jpg",
+    text: "Papa — kam bolte hain, par har kadam pe saath khade rehte hain 💪❤️"
+  },
+  {
+    img: "/images/p11.jpg",
+    text: "Maa — jinki ek muskaan se duniya safe lagne lagti hai 🤍✨"
+  }
+];
+
+let index = 0;
+
+const photo = document.getElementById("photo");
+const text  = document.getElementById("text");
+const prevBtn = document.getElementById("prevBtn");
+
+function updateView(){
+  photo.src = photos[index].img;
+  text.innerText = photos[index].text;
+
+  prevBtn.disabled = index === 0;
+}
+
+updateView();
+
+function nextPhoto(){
+  if(index < photos.length - 1){
+    index++;
+    updateView();
+  } else {
+    // 🔥 LAST PHOTO KE BAAD
+    window.location.href = "finish.html";
+  }
+}
+
+function prevPhoto(){
+  if(index > 0){
+    index--;
+    updateView();
+  }
+}
+</script>
+
+</body>
+</html>

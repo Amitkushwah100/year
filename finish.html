@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year 💛</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+.box{
+  max-width:750px;
+  padding:40px;
+}
+
+h1{
+  font-size:42px;
+  color:#ffd86b;
+  margin-bottom:30px;
+}
+
+p{
+  font-size:22px;
+  line-height:1.7;
+  color:#eee;
+  margin-bottom:40px;
+}
+
+button{
+  padding:14px 42px;
+  font-size:16px;
+  border-radius:30px;
+  border:1px solid white;
+  background:transparent;
+  color:white;
+  cursor:pointer;
+}
+</style>
+</head>
+<audio id="bgMusic" autoplay loop>
+  <source src="/music/soft.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.4;
+
+  document.body.addEventListener("click", () => {
+    music.play();
+  }, { once: true });
+</script>
+
+
+<body>
+
+<canvas id="fw"></canvas>
+
+<div class="box">
+  <h1>Happy New Year, Pranssi 🎆</h1>
+
+  <p>
+    Thank you for being more than just a friend.  
+    <br><br>
+    Through laughs, silence, chaos, and calm —  
+    our dosti has always felt safe and real.  
+    <br><br>
+    May this year bring you endless smiles,  
+    peaceful days, and everything your heart deserves.  
+    <br><br>
+    Always grateful for you 🤍
+  </p>
+
+  <button onclick="restart()">Restart 🔁</button>
+</div>
+
+<!-- 🎶 SOFT BACKGROUND MUSIC -->
+<audio id="bgMusic" autoplay loop>
+  <!-- 👇 yaha apna music file daalna -->
+  <source src="/music/soft.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* 🔁 RESTART */
+function restart(){
+  window.location.href = "index.html";
+}
+
+/* 🎆 SOFT FIREWORKS */
+const canvas = document.getElementById("fw");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const colors = ["#ffd700","#ff6ec7","#7afcff","#ffffff"];
+let sparks = [];
+
+function firework(){
+  let x = Math.random()*canvas.width;
+  let y = Math.random()*canvas.height*0.5;
+  let color = colors[Math.floor(Math.random()*colors.length)];
+
+  for(let i=0;i<60;i++){
+    sparks.push({
+      x,y,
+      dx:(Math.random()-0.5)*3,
+      dy:(Math.random()-0.5)*3,
+      life:80,
+      color
+    });
+  }
+}
+
+function animate(){
+  ctx.fillStyle="rgba(0,0,0,0.15)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  sparks.forEach((s,i)=>{
+    ctx.fillStyle=s.color;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,2,0,Math.PI*2);
+    ctx.fill();
+
+    s.x+=s.dx;
+    s.y+=s.dy;
+    s.life--;
+    if(s.life<=0) sparks.splice(i,1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+setInterval(firework,700);
+animate();
+</script>
+
+</body>
+</html>

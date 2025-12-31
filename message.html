@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI', sans-serif;
+}
+
+body{
+  height:100vh;
+  background:#000;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+#screen{
+  text-align:center;
+  max-width:700px;
+  padding:40px;
+}
+
+.line{
+  font-size:28px;
+  line-height:1.6;
+  opacity:0;
+  filter:blur(6px);
+  transition:all 1.5s ease;
+}
+
+.show{
+  opacity:1;
+  filter:blur(0);
+}
+
+.heartbeat{
+  animation:beat 2s infinite;
+}
+
+@keyframes beat{
+  0%{transform:scale(1)}
+  25%{transform:scale(1.04)}
+  40%{transform:scale(1)}
+  60%{transform:scale(1.04)}
+  100%{transform:scale(1)}
+}
+
+.final{
+  margin-top:40px;
+  font-size:34px;
+  font-weight:600;
+  color:#ffd86b;
+}
+
+#nextBtn{
+  margin-top:35px;
+  padding:12px 34px;
+  font-size:16px;
+  background:transparent;
+  border:1px solid #fff;
+  color:#fff;
+  cursor:pointer;
+  opacity:0;
+  transition:0.6s;
+}
+
+#nextBtn.showBtn{
+  opacity:1;
+}
+</style>
+</head>
+
+<audio id="bgMusic" autoplay loop>
+  <source src="/music/soft.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.4;
+
+  // browser block kare to first click pe chale
+  document.body.addEventListener("click", () => {
+    music.play();
+  }, { once: true });
+</script>
+
+
+<body>
+
+<canvas id="fw"></canvas>
+
+<div id="screen">
+  <div id="l1" class="line">This year changed a lot of things…</div>
+  <div id="l2" class="line">people came, people left.</div>
+  <div id="l3" class="line">but some stayed without any reason.</div>
+  <div id="l4" class="line heartbeat">That’s rare.</div>
+  <div id="l5" class="line final">And that’s you.</div>
+
+  <button id="nextBtn" onclick="goNext()">Next →</button>
+</div>
+
+<script>
+/* 🎆 SOFT MULTI-COLOR FIREWORKS */
+const canvas = document.getElementById("fw");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const colors = ["#00ff88","#ffd700","#ff4444","#4da6ff","#ffffff"];
+let sparks = [];
+
+function firework(){
+  let x = Math.random()*canvas.width;
+  let y = Math.random()*canvas.height*0.5;
+  let color = colors[Math.floor(Math.random()*colors.length)];
+  for(let i=0;i<70;i++){
+    sparks.push({
+      x,y,
+      dx:(Math.random()-0.5)*3,
+      dy:(Math.random()-0.5)*3,
+      life:80,
+      color
+    });
+  }
+}
+
+function animate(){
+  ctx.fillStyle="rgba(0,0,0,0.15)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  sparks.forEach((s,i)=>{
+    ctx.fillStyle=s.color;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,1.8,0,Math.PI*2);
+    ctx.fill();
+    s.x+=s.dx;
+    s.y+=s.dy;
+    s.life--;
+    if(s.life<=0) sparks.splice(i,1);
+  });
+
+  requestAnimationFrame(animate);
+}
+
+setInterval(firework,700);
+animate();
+
+/* 🎬 CINEMATIC TEXT */
+const lines=["l1","l2","l3","l4","l5"];
+let i=0;
+
+function showLine(){
+  if(i<lines.length){
+    document.getElementById(lines[i]).classList.add("show");
+    i++;
+    setTimeout(showLine,2600);
+  }
+}
+setTimeout(showLine,1500);
+
+/* show next button */
+setTimeout(()=>{
+  document.getElementById("nextBtn").classList.add("showBtn");
+},16000);
+
+function goNext(){
+  window.location.href="final.html";
+}
+</script>
+
+</body>
+</html>

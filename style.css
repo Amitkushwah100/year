@@ -1,0 +1,29 @@
+body{
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:black;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+}
+
+.box{
+  padding:40px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  box-shadow:0 0 40px rgba(255,255,255,0.3);
+}
+
+button{
+  padding:15px 35px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#ff6ec7,#ffd86b);
+  box-shadow:0 0 20px #ff6ec7;
+}

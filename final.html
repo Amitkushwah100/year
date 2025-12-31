@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy New Year 🎆</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:black;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+}
+
+#container{
+  text-align:center;
+  z-index:2;
+}
+
+.line{
+  display:block;
+}
+
+.letter{
+  display:inline-block;
+  font-size:52px;
+  font-weight:700;
+  letter-spacing:6px;
+  color:white;
+  opacity:0;
+  transform:scale(0.4);
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.8),
+    0 0 25px rgba(255,215,0,0.6);
+  animation: pop 0.5s ease-out forwards;
+}
+
+.name{
+  font-size:64px;
+  color:#ffd86b;
+  margin-top:20px;
+}
+
+@keyframes pop{
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+#nextBtn{
+  margin-top:40px;
+  padding:14px 36px;
+  font-size:16px;
+  background:transparent;
+  border:1px solid #fff;
+  color:#fff;
+  cursor:pointer;
+  opacity:0;
+  transition:0.6s;
+}
+
+#nextBtn.show{
+  opacity:1;
+}
+</style>
+</head>
+<!-- 🎶 FIREWORKS MUSIC -->
+<audio id="fireMusic" autoplay loop>
+  <source src="/music/fireworks.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const fireMusic = document.getElementById("fireMusic");
+  fireMusic.volume = 0.5;
+
+  // browser autoplay block kare to first click pe start
+  document.body.addEventListener("click", () => {
+    fireMusic.play();
+  }, { once: true });
+</script>
+
+
+<body>
+
+<canvas id="c"></canvas>
+
+<div id="container">
+  <div id="line1" class="line"></div>
+  <div id="line2" class="line name"></div>
+
+  <button id="nextBtn" onclick="goNext()">Special For Pranssi →</button>
+</div>
+
+<script>
+/* 🎆 FIREWORKS */
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const colors = ["#00ff88","#ffd700","#ff4444","#4da6ff","#ffffff"];
+let particles=[];
+
+function firework(x,y,color){
+  for(let i=0;i<80;i++){
+    particles.push({
+      x,y,
+      dx:(Math.random()-0.5)*4,
+      dy:(Math.random()-0.5)*4,
+      life:90,
+      color
+    });
+  }
+}
+
+function backgroundFirework(){
+  let x=Math.random()*canvas.width;
+  let y=Math.random()*canvas.height*0.5;
+  let color=colors[Math.floor(Math.random()*colors.length)];
+  firework(x,y,color);
+}
+setInterval(backgroundFirework,700);
+
+function animate(){
+  ctx.fillStyle="rgba(0,0,0,0.18)";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach((p,i)=>{
+    ctx.fillStyle=p.color;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,2,0,Math.PI*2);
+    ctx.fill();
+    p.x+=p.dx;
+    p.y+=p.dy;
+    p.life--;
+    if(p.life<=0) particles.splice(i,1);
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* ✨ TEXT POP-POP */
+const text1 = "HAPPY NEW YEAR";
+const text2 = "PRANSSI❤️";
+let i1=0, i2=0;
+
+function writeLine1(){
+  if(i1 < text1.length){
+    let s=document.createElement("span");
+    s.className="letter";
+    s.innerHTML=text1[i1]===" "?"&nbsp;":text1[i1];
+    line1.appendChild(s);
+
+    firework(canvas.width/2-360+i1*32, canvas.height/2-120,
+      colors[Math.floor(Math.random()*colors.length)]
+    );
+
+    i1++;
+    setTimeout(writeLine1,220);
+  } else {
+    setTimeout(writeLine2,500);
+  }
+}
+
+function writeLine2(){
+  if(i2 < text2.length){
+    let s=document.createElement("span");
+    s.className="letter";
+    s.innerHTML=text2[i2];
+    line2.appendChild(s);
+
+    firework(canvas.width/2-180+i2*36, canvas.height/2-40,
+      colors[Math.floor(Math.random()*colors.length)]
+    );
+
+    i2++;
+    setTimeout(writeLine2,260);
+  } else {
+    document.getElementById("nextBtn").classList.add("show");
+  }
+}
+
+setTimeout(writeLine1,900);
+
+function goNext(){
+  window.location.href="special.html";
+}
+</script>
+
+</body>
+</html>
+z

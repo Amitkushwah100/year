@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Almost There ✨</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="box">
+  <h1 id="count">0%</h1>
+  <p>Preparing your surprise… 🎁</p>
+</div>
+
+<script>
+let percent = 0;
+
+let timer = setInterval(() => {
+  percent++;
+  document.getElementById("count").innerText = percent + "%";
+
+  if (percent === 100) {
+    clearInterval(timer);
+    window.location.href = "message.html";
+  }
+}, 30); // smooth animation
+</script>
+
+</body>
+</html>
